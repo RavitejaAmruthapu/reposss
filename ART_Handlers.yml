@@ -1,0 +1,13 @@
+---
+  - hosts: all
+    user: teja
+    sudo: yes
+    connection: ssh
+    gather_facts: no
+    tasks:
+      - name: Install httpd server
+        yum: pkg=httpd state=installed update_cache=true
+        notify: RestartHTTPD
+    handlers:
+      - name: RestartHTTPD
+        action: service name=httpd state=restarted
